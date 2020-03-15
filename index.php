@@ -1,22 +1,56 @@
-<h2>practice</h2>
-<pre>
-<?php
-  try{
-    // new PDO = (データソース名、ユーザー名、パスワード、オプション)
+<?php 
+session_start();
+require('dbconnect.php');
 
-     $db = new PDO('mysql:dbname=bss;host=localhost;charset=utf8','sima','0000');
-  } catch(PDOException $e){
-    echo 'DB接続エラー :' . $e->getMessage();
-  }
-
-  // $query = $db->exec('insert into users(name,email,password) values("sima","test@au.co.jp","0000");');
-  // echo $query . '件のデータを挿入しました';
-  $records =$db->query('select * from users;');
-  while($record = $records->fetch()){
-    print ($record['email'] . "\n");
-    print ($record['name'] . "\n");
-  }
-
+if (isset($_SESSION['id']) && $_SESSION['time'] + 3600 > time()) {
   
+  $_SESSION['time']=time();
+  //
+  $users = $db->prepare('select * from users where id=?');
+  $users->execute(array($_SESSION['id']));
+  $user = $users->fetch();
+}else{
+  header('Location: login.php');
+  exit();
+}
+
+//投稿をデータベースに保存する
+if(!empty($_POST)){
+  if ($_POST['text']!=''){
+    $text = $db->prepare('insert into posts(user_id,text) values (?,?)');
+    $text->execute(array(
+      $user['id'],
+      $_POST['text']
+    ));
+    header('Location: index.php'); exit();
+  }
+}
+
+$posts = $db->query('select * from posts inner join users on posts.user_id = users.id;');
+
+
 ?>
-</pre>
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+<h2>practice</h2>
+ようこそ、<?php echo htmlspecialchars($user['name'],ENT_QUOTES); ?>さん
+<form action="" method="post">
+  <p>何か投稿する</p>
+  <input type="text" name="text">
+  <input type="submit" value="投稿する">
+</form>
+</body>
+</html>
+
+
+<?php foreach ($posts as $post):?>
+  <p><?php echo htmlspecialchars($post['text'], ENT_QUOTES);?>
+  投稿者：<?php echo htmlspecialchars($post['name'], ENT_QUOTES); ?></p>
+<?php endforeach; ?>
