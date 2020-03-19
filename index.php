@@ -30,8 +30,6 @@ if(!empty($_POST)){
 // $posts = $db->query('select * from posts inner join users on posts.user_id = users.id;');
 $posts = $db->query('select u.name,p.* from users u, posts p where p.user_id = u.id;');
 
-
-
 ?>
 <!DOCTYPE html>
 <html lang="ja">
