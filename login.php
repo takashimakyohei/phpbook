@@ -2,12 +2,6 @@
 require('dbconnect.php');
 session_start();
 
-if ($_COOKIE['email'] != '') {
-$_POST['email'] = $_COOKIE['email'];
-$_POST['password'] = $_COOKIE['password'];
-$_POST['save'] = 'on';
-}
-
 
 if (!empty($_POST)) {
 	// ログインの処理

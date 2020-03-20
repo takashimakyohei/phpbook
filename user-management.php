@@ -10,6 +10,9 @@ if (!empty($_POST)){
   if($_POST['email'] == ''){
     $error['email'] = 'blank';
   }
+  if (filter_var($_POST['email'], FILTER_VALIDATE_EMAIL) === false ){
+    $error['email'] = 'blank';
+  }
   if(strlen($_POST['password']) < 7){
     $error['password'] = 'length';
   }
@@ -37,10 +40,10 @@ if (!empty($_POST)){
   <h1>会員登録</h1>
   <form action="" method="post">
 
-  ユーザー名：<input type="text" name="name" 
+  ユーザー名：<input type="text" name="user" 
   value="<?php 
-  if (isset($_POST['name'])){
-  echo htmlspecialchars($_POST['name'],ENT_QUOTES, 'UTF-8');
+  if (isset($_POST['user'])){
+  echo htmlspecialchars($_POST['user'],ENT_QUOTES, 'UTF-8');
   }?>">
  
 
