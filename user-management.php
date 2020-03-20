@@ -22,13 +22,7 @@ if (!empty($_POST)){
     exit();
   }
 }
-
-    if ($_REQUEST['action'] == 'rewrite') {
-      $_POST = $_SESSION['join'];
-      $error['rewrite'] = true;
-      }
-    
-      ?>
+?>
 
 
 <!DOCTYPE html>
@@ -43,24 +37,25 @@ if (!empty($_POST)){
   <h1>会員登録</h1>
   <form action="" method="post">
 
-  ユーザー名：<input type="text" name="user" 
-  value="<?php echo htmlspecialchars($_POST['user'],ENT_QUOTES, 'UTF-8');?>">
-  <?php if($error['user'] = 'blank'): ?>
-    <p>ユーザー名を入力してください</p>
-  <?php endif; ?>
+  ユーザー名：<input type="text" name="name" 
+  value="<?php 
+  if (isset($_POST['name'])){
+  echo htmlspecialchars($_POST['name'],ENT_QUOTES, 'UTF-8');
+  }?>">
+ 
 
-  e-mail: <input type="text" name="email" value="<?php echo htmlspecialchars($_POST['email'],ENT_QUOTES, 'UTF-8'); ?>"/>
-  <?php if($error['email'] = 'blank'): ?>
-    <p>emailを入力してください</p>
-  <?php endif; ?>
+  e-mail: <input type="text" name="email" value="<?php 
+  if (isset($_POST['email'])){
+  echo htmlspecialchars($_POST['email'],ENT_QUOTES, 'UTF-8');
+  } ?>"/>
+  
 
-  PW: <input type="text" name = password value="<?php echo htmlspecialchars($_POST['password'],ENT_QUOTES, 'UTF-8'); ?>" />
-  <?php if($error['password'] = 'blank'): ?>
-    <p>パスワードを入力してください</p>
-  <?php endif; ?>
-  <?php if ($error['password'] == 'length'): ?>
-    <p>パスワードは8文字以上で入力してください</p>
-  <?php endif; ?>
+  PW: <input type="text" name = password value="<?php 
+  if (isset($_POST['password'])){
+  echo htmlspecialchars($_POST['password'],ENT_QUOTES, 'UTF-8');
+  } ?>" />
+ 
+  
   <button type="submit">登録する</button>
   </form>
 </body>
