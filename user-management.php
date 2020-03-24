@@ -5,18 +5,33 @@ require('dbconnect.php');
 if (!empty($_POST)){
   //エラー項目の確認
   if($_POST['user'] == ''){
+    echo '<p>';
+    echo 'ユーザー名が空です';
+    echo '</p>';
     $error['user'] = 'blank';
   }
   if($_POST['email'] == ''){
+    echo '<p>';
+    echo 'メールアドレスが空です';
+    echo '</p>';
     $error['email'] = 'blank';
   }
   if (filter_var($_POST['email'], FILTER_VALIDATE_EMAIL) === false ){
+    echo '<p>';
+    echo 'メールアドレスが不正です';
+    echo '</p>';
     $error['email'] = 'blank';
   }
   if(strlen($_POST['password']) < 7){
+    echo '<p>';
+    echo 'パスワードは7文字以上で入力してください';
+    echo '</p>';
     $error['password'] = 'length';
   }
   if($_POST['password'] == ''){
+    echo '<p>';
+    echo 'パスワードが不正です';
+    echo '</p>';
     $error['password'] = 'blank';
   }
   if(empty($error)){

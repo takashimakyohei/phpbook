@@ -58,7 +58,6 @@ $posts = $db->query('select u.name,p.* from users u, posts p where p.user_id = u
   投稿者：<?php echo htmlspecialchars($post['name'], ENT_QUOTES); ?>
   </p>
   <?php if ($_SESSION['id'] == $post['user_id']):?>
-
     <a href="delete.php?id=<?php echo htmlspecialchars($post['id'],ENT_QUOTES);?>">削除</a>
   <?php endif; ?>
 <?php endforeach; ?>
